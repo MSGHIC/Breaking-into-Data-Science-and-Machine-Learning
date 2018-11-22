@@ -5,7 +5,7 @@
 In repository through *data visualization*, gives an account on how Students around the world *break into the field of Data Science and Machine Learning*. The story is based on data collected from *5253 students* that took part in the survey *“Kaggle Data Science Survey 2018 for Machine Learning and Data Science Community”*.  
 **Data Science (DS)** and **Machine learning (ML)** have revolutionized the way we do business today, and a lot is still being explored to date. AI is driving the 21st innovations and the fact that ML as a field in AI needs well prepared Data for training–of course this Data is a product of Data Science. This places ML & DS among the top hot fascinating fields that students all over the world yearn to break into.
 
-**Using this repo will, you will know...**, *who are the students breaking into DS & ML and where are they located?* , *which tools do they use?* , *what’s their education background?* , *how much time do they devote to learning DS & ML and how do they learn? , what challenges them?*, *how about the programming languages they opt for?*, and lastly *which kind of data do they interact with and what are their main sources for data/information?*. 
+**Using this repo will, you will know...**, *the students breaking into DS & ML and where are they located* , *tools they use* , *their education background* , *how much time they devote to learning DS & ML and how they learn, what challenges them*, *programming languages they opt for*, and lastly *the kind of data they interact with and their main sources of data/information*. 
 
 **Who And Where They Are Residing?**
 
