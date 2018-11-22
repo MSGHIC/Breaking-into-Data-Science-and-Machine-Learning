@@ -1,15 +1,10 @@
 # -*- coding: utf-8 -*-
 """
-Created on Mon Nov  5 20:44:20 2018
+Created on Thu Nov 22 12:04:52 2018
 
 @author: MSG
 """
-"""script to analyse 
-integrated development environments (IDE's) , 
-hosted notebooks, cloud computing services,
-specific programming language, machine learning frameworks,
-ML library, specific data visualization library or tool   students use most often 
-"""
+
 #required libraries
 import json 
 import pygal
@@ -18,25 +13,95 @@ import pygal
 def SaveAsJson(jsonfilename, listname):
     """saves list of dicts data to json file"""
     with open(jsonfilename+'.json', 'w') as f:
-     json.dump(listname, f, indent = 2)  
+     json.dump(listname, f, indent = 2)    
 
-    
-#*********IDES STUDENTS USE********************
-#initialize empty  list for  IDEs
+#initialize empty  list 
+
+#*********IDES STUDENTS USE***************
 IDEs = []
-#populate IDEs list
+#******Hosted Notebooks Students use **********
+hosted_notebooks = []  
+#****CLOUD COMPUTING SERVICES STUDENTS USE***********     
+cloud_computing_services = []  
+#****SPECIFIC PROGRAMMING LANGUAGE STUDENTS USE MOST OFTEN ***********    
+programming_languages = [] 
+#****MACHINE LEARNING FRAMEWORKS THEY USE ***********     
+machine_learning_frameworks = []     
+#****ML LIBRARY STUDENTS USE MOST OFTEN ***********    
+ml_libraries = []  
+#****DATA VISUALIZATION LIBRARY STUDENTS USE MOST OFTEN ***********     
+visualization_libraries = [] 
+#****PRIMARY TOOL THEY USE TO ANALYSE DATA ***********     
+tools = []     
+
+
+#populate  lists
 with open("dataset_student.json", "r") as d:
     json_dataset = json.load(d)
     for key, value in json_dataset.items():
+        #populate IDEs list
         for i in range(1, 16):
             ide = value['Q13_Part_'+str(i)]
             if ide:
                 #populate education_level list
                 if ide not in IDEs:
-                    IDEs.append(ide)
-#count the scores for each IDE 
-#IDE gets score of 1 if was voted by student
+                    IDEs.append(ide)  
+        #populate hosted notebooks list
+        for i in range(1, 12):
+            notebook = value['Q14_Part_'+str(i)]
+            if  notebook:
+                #populate hosted_notebooks list
+                if notebook not in hosted_notebooks:
+                    hosted_notebooks.append(notebook)
+        #populate cloud_computing_services list
+        for i in range(1, 8):
+            service = value['Q15_Part_'+str(i)]
+            if service:
+                #populate cloud_computing_services list
+                if service not in cloud_computing_services:
+                    cloud_computing_services.append(service)
+        #populate programming_languages list
+        prog_lang = value['Q17']
+        if prog_lang:
+            #populate programming_languages list
+            if prog_lang not in programming_languages:
+                programming_languages.append(prog_lang)
+        #populate machine_learning_frameworks list
+        for i in range(1, 20):
+            framework = value['Q19_Part_'+str(i)]
+            if framework:
+                #add it to list
+                if framework not in machine_learning_frameworks:
+                    machine_learning_frameworks.append(framework)
+        #populate ml_libraries list
+        library = value['Q20']
+        if library:
+            if library not in ml_libraries:
+                ml_libraries.append(library)
+        #populate visualization_libraries list
+        visual_library = value['Q22']
+        if visual_library:
+            #populate libraries list
+            if visual_library not in visualization_libraries:
+                visualization_libraries.append(visual_library)
+        #populate tools list
+        tool = value['Q12_MULTIPLE_CHOICE']
+        if tool:
+            #populate tools list
+            if tool not in tools:
+               tools.append(tool)
+               
+#count the scores for each  item in a given list
+#each item gets score of 1 if it was voted by student 
+#store scores in lists               
 IDE_Scores = []
+hosted_notebooks_Scores = []
+services_Scores = []
+language_Scores = []
+frameworks_Scores = []
+library_Scores = []
+visual_library_Scores = []
+tools_Scores = []
 with open("dataset_student.json", "r") as d:
     json_dataset = json.load(d)
     #update IDE_Scores list
@@ -50,29 +115,7 @@ with open("dataset_student.json", "r") as d:
                    if IDEs[i] ==  ide:
                        score += 1                
         score_dict = {"IDE" :IDEs[i], "Score":score} 
-        IDE_Scores.append(score_dict)        
-#save list in json for future use
-SaveAsJson('IDEs_Scores', IDE_Scores)
-     
-     
-#******Hosted Notebooks Students use **********
-#initialize empty  list for   hosted notebooks
-hosted_notebooks = []   
-#populate hosted notebooks list
-with open("dataset_student.json", "r") as d:
-    json_dataset = json.load(d)
-    for key, value in json_dataset.items():
-        for i in range(1, 12):
-            notebook = value['Q14_Part_'+str(i)]
-            if  notebook:
-                #populate hosted_notebooks list
-                if notebook not in hosted_notebooks:
-                    hosted_notebooks.append(notebook)
-#count the scores for each  hosted notebook
-#notebook gets score of 1 if was voted by student
-hosted_notebooks_Scores = []
-with open("dataset_student.json", "r") as d:
-    json_dataset = json.load(d)
+        IDE_Scores.append(score_dict) 
     #update notebook_Scores list
     for i in range(0, len(hosted_notebooks)):
         score = 0
@@ -85,28 +128,6 @@ with open("dataset_student.json", "r") as d:
                        score += 1                
         score_dict = {"notebook" :hosted_notebooks[i], "Score":score} 
         hosted_notebooks_Scores.append(score_dict)        
-#save list in json for future use
-SaveAsJson('hosted_notebooks_Scores', hosted_notebooks_Scores)    
-     
-     
-#****CLOUD COMPUTING SERVICES STUDENTS USE***********     
-#initialize empty  list for cloud computing services
-cloud_computing_services = []     
-#populate hosted notebooks list
-with open("dataset_student.json", "r") as d:
-    json_dataset = json.load(d)
-    for key, value in json_dataset.items():
-        for i in range(1, 8):
-            service = value['Q15_Part_'+str(i)]
-            if service:
-                #populate cloud_computing_services list
-                if service not in cloud_computing_services:
-                    cloud_computing_services.append(service)
-#count the scores for each  service
-#each service gets score of 1 if was voted by student
-services_Scores = []
-with open("dataset_student.json", "r") as d:
-    json_dataset = json.load(d)
     #update services_Scores list
     for i in range(0, len(cloud_computing_services)):
         score = 0
@@ -118,28 +139,7 @@ with open("dataset_student.json", "r") as d:
                    if cloud_computing_services[i] ==  service:
                        score += 1                
         score_dict = {"cloud_computing_services" :cloud_computing_services[i], "Score":score} 
-        services_Scores.append(score_dict)        
-#save list in json for future use
-SaveAsJson('cloud_computing_services_Scores', services_Scores)  
-
-      
-#****SPECIFIC PROGRAMMING LANGUAGE STUDENTS USE MOST OFTEN ***********    
-#initialize empty  list for programming languages
-programming_languages = []      
-#populate programming_languages  list
-with open("dataset_student.json", "r") as d:
-    json_dataset = json.load(d)
-    for key, value in json_dataset.items():
-            prog_lang = value['Q17']
-            if prog_lang:
-                #populate programming_languages list
-                if prog_lang not in programming_languages:
-                    programming_languages.append(prog_lang)
-#count the scores for each  programming language
-#each language gets score of 1 if was voted by student
-language_Scores = []
-with open("dataset_student.json", "r") as d:
-    json_dataset = json.load(d)
+        services_Scores.append(score_dict)
     #update language_Scores list
     for i in range(0, len(programming_languages)):
         score = 0
@@ -150,30 +150,7 @@ with open("dataset_student.json", "r") as d:
                 if programming_languages[i] ==  prog_lang:
                     score += 1                
         score_dict = {"programming_language" :programming_languages[i], "Score":score} 
-        language_Scores.append(score_dict)        
-#save list in json for future use
-SaveAsJson('programming_languages_Scores', language_Scores)    
- 
-    
-#****MACHINE LEARNING FRAMEWORKS THEY USE ***********     
-#initialize empty  list for machine learning frameworks
-machine_learning_frameworks = []      
-#populate machine_learning_frameworks list
-with open("dataset_student.json", "r") as d:
-    json_dataset = json.load(d)
-    for key, value in json_dataset.items():
-        for i in range(1, 20):
-            framework = value['Q19_Part_'+str(i)]
-            if framework:
-                #add it to list
-                if framework not in machine_learning_frameworks:
-                    machine_learning_frameworks.append(framework)
-#count the scores for each  framework
-#each framework gets score of 1 if was voted by student
-frameworks_Scores = []
-#populate frameworks_Scores list
-with open("dataset_student.json", "r") as d:
-    json_dataset = json.load(d)
+        language_Scores.append(score_dict)   
     #update frameworks_Scores list
     for i in range(0, len(machine_learning_frameworks)):
         score = 0
@@ -185,28 +162,7 @@ with open("dataset_student.json", "r") as d:
                    if machine_learning_frameworks[i] ==  framework:
                        score += 1                
         score_dict = {"framework" :machine_learning_frameworks[i], "Score":score} 
-        frameworks_Scores.append(score_dict)        
-#save list in json for future use
-SaveAsJson('machine_learning_frameworks_Scores', frameworks_Scores)  
- 
-
-#****ML LIBRARY STUDENTS USE MOST OFTEN ***********    
-#initialize empty  list for ML Libraries
-ml_libraries = []      
-#populateml_libraries  list
-with open("dataset_student.json", "r") as d:
-    json_dataset = json.load(d)
-    for key, value in json_dataset.items():
-            library = value['Q20']
-            if library:
-                #populate libraries list
-                if library not in ml_libraries:
-                    ml_libraries.append(library)
-#count the scores for each  library
-#each library gets score of 1 if it was voted by student
-library_Scores = []
-with open("dataset_student.json", "r") as d:
-    json_dataset = json.load(d)
+        frameworks_Scores.append(score_dict) 
     #update library_Scores list
     for i in range(0, len(ml_libraries)):
         score = 0
@@ -217,28 +173,7 @@ with open("dataset_student.json", "r") as d:
                 if ml_libraries[i] ==  library:
                     score += 1                
         score_dict = {"library" : ml_libraries[i], "Score":score} 
-        library_Scores.append(score_dict)        
-#save list in json for future uses
-SaveAsJson('ML Libraries_Scores', library_Scores)   
- 
-    
-#****DATA VISUALIZATION LIBRARY STUDENTS USE MOST OFTEN ***********     
-#initialize empty  list for Visualization Libraries
-visualization_libraries = []     
-#populate visualization_libraries  list
-with open("dataset_student.json", "r") as d:
-    json_dataset = json.load(d)
-    for key, value in json_dataset.items():
-            visual_library = value['Q22']
-            if visual_library:
-                #populate libraries list
-                if visual_library not in visualization_libraries:
-                    visualization_libraries.append(visual_library)
-#count the scores for each  library
-#each library gets score of 1 if it was voted by student
-visual_library_Scores = []
-with open("dataset_student.json", "r") as d:
-    json_dataset = json.load(d)
+        library_Scores.append(score_dict) 
     #update library_Scores list
     for i in range(0, len(visualization_libraries)):
         score = 0
@@ -250,27 +185,6 @@ with open("dataset_student.json", "r") as d:
                     score += 1                
         score_dict = {"library" : visualization_libraries[i], "Score":score} 
         visual_library_Scores.append(score_dict)        
-#save list in json for future use
-SaveAsJson('DATA VISUALIZATION Libraries_Scores', visual_library_Scores)     
-
-
-#****PRIMARY TOOL THEY USE TO ANALYSE DATA ***********     
-#initialize empty  list for Visualization Libraries
-tools = []      
-#populate visualization_libraries  list
-with open("dataset_student.json", "r") as d:
-    json_dataset = json.load(d)
-    for key, value in json_dataset.items():
-            tool = value['Q12_MULTIPLE_CHOICE']
-            if tool:
-                #populate tools list
-                if tool not in tools:
-                   tools.append(tool)
-#count the scores for each  tool
-#each tool gets score of 1 if it was voted by student
-tools_Scores = []
-with open("dataset_student.json", "r") as d:
-    json_dataset = json.load(d)
     #update tools_Scores list
     for i in range(0, len(tools)):
         score = 0
@@ -281,11 +195,18 @@ with open("dataset_student.json", "r") as d:
                 if tools[i] ==  tool:
                     score += 1               
         score_dict = {"tool" : tools[i], "Score":score} 
-        tools_Scores.append(score_dict)   
-        
-#save list in json for future use
-SaveAsJson('primary data analysis tools _Scores',  tools_Scores)    
-    
+        tools_Scores.append(score_dict)        
+
+
+#save as json lists  for future use
+SaveAsJson('IDEs_Scores', IDE_Scores)
+SaveAsJson('hosted_notebooks_Scores', hosted_notebooks_Scores) 
+SaveAsJson('cloud_computing_services_Scores', services_Scores) 
+SaveAsJson('programming_languages_Scores', language_Scores)
+SaveAsJson('machine_learning_frameworks_Scores', frameworks_Scores) 
+SaveAsJson('ML Libraries_Scores', library_Scores)   
+SaveAsJson('DATA VISUALIZATION Libraries_Scores', visual_library_Scores) 
+SaveAsJson('primary data analysis tools _Scores',  tools_Scores)  
 
 #VISUALIZE DATA
 
@@ -299,7 +220,6 @@ with open('IDE_Scores.json', 'r') as m:
         pie_chart.value_formatter = lambda x: "%.0f" % x
         pie_chart.render_to_file('IDEs used by Students.svg')
 
-
 #*****Hosted Notebooks Students use********
 with open('hosted_notebooks_Scores.json', 'r') as n:
         notebook_Scores = json.load(n)
@@ -310,7 +230,6 @@ with open('hosted_notebooks_Scores.json', 'r') as n:
         pie_chart.value_formatter = lambda x: "%.0f" % x
         pie_chart.render_to_file('Hosted Notebooks Students use.svg')
 
-
 #****CLOUD COMPUTING SERVICES****************
 with open('cloud_computing_services_Scores.json', 'r') as g:
         services_Scores = json.load(g)
@@ -320,7 +239,6 @@ with open('cloud_computing_services_Scores.json', 'r') as g:
             pie_chart.add(item['cloud_computing_services'], [{'value': item['Score'], 'label': item['cloud_computing_services']}])
         pie_chart.value_formatter = lambda x: "%.0f" % x
         pie_chart.render_to_file('cloud_computing_services Students use.svg')
-
         
 #****SPECIFIC PROGRAMMING LANGUAGES ****************
 with open('programming_languages_Scores.json', 'r') as f:    
@@ -331,7 +249,6 @@ with open('programming_languages_Scores.json', 'r') as f:
             pie_chart.add(item['programming_language'], [{'value': item['Score'], 'label': item['programming_language']}])
         pie_chart.value_formatter = lambda x: "%.0f" % x
         pie_chart.render_to_file('programming_languages Students use.svg')
-
         
 #*****ML Libraries**************
 with open('ML Libraries_Scores.json', 'r') as l:    
@@ -343,7 +260,6 @@ with open('ML Libraries_Scores.json', 'r') as l:
         pie_chart.value_formatter = lambda x: "%.0f" % x
         pie_chart.render_to_file('Machine Learning Libraries Students use.svg')   
 
-
 #****machine learning frameworks************
 with open('machine_learning_frameworks_Scores.json', 'r') as j:    
         framework_Scores = json.load(j)
@@ -354,7 +270,6 @@ with open('machine_learning_frameworks_Scores.json', 'r') as j:
         pie_chart.value_formatter = lambda x: "%.0f" % x
         pie_chart.render_to_file('Machine Learning frameworks Students use.svg')   
 
-
 #****Data Visualization Libraries use************
 with open('DATA VISUALIZATION Libraries_Scores.json', 'r') as j:    
         library_Scores = json.load(j)
@@ -363,8 +278,7 @@ with open('DATA VISUALIZATION Libraries_Scores.json', 'r') as j:
         for item in   library_Scores:
             pie_chart.add(item['library'], [{'value': item['Score'], 'label': item['library']}])
         pie_chart.value_formatter = lambda x: "%.0f" % x
-        pie_chart.render_to_file('Data Visualization Libraries Students use.svg')   
-       
+        pie_chart.render_to_file('Data Visualization Libraries Students use.svg')      
         
 #****Primary data analysis tools************
 with open('primary data analysis tools _Scores.json', 'r') as j:    
@@ -374,4 +288,4 @@ with open('primary data analysis tools _Scores.json', 'r') as j:
         for item in   tools_Scores:
             pie_chart.add(item['tool'], [{'value': item['Score'], 'label': item['tool']}])
         pie_chart.value_formatter = lambda x: "%.0f" % x
-        pie_chart.render_to_file('primary data analysis tools Students use.svg')   
+        pie_chart.render_to_file('primary data analysis tools Students use.svg')        
