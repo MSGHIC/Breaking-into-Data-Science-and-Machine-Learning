@@ -10,5 +10,5 @@ In repository through *data visualization*, gives an account on how Students aro
 The “who?” looks at the age brackets for kaggers and the “where?” is their current country of residence. *According to the survey*, majority of new data scientists are *aged 18-21* and currently residing in **India**, **USA**, and **China** respectively. It is also evident that the numbers gradually decrease as age range increases–for example above 40, we see less than 10 new aspiring data scientists.
 
 **Which Tools Do They Use?**
-![image]    (https://cdn.pixabay.com/photo/2015/02/07/13/36/computer-627220_960_720.jpg)
+![image]    (https://github.com/MSGHIC/Breaking-into-Data-Science-and-Machine-Learning/blob/master/images/image1.png)
 To *break into data science* and become a *super data scientist*, in other words gain expertise in DS & ML field is really challenging, and requires *unstoppable commitment* to finally achieve the dream. **tool_they_opt_for.py** presents the tools in terms of  *integrated development environments (IDE's)* , *hosted notebooks*, *cloud computing services*,  *programming languages*, *machine learning frameworks*, *ML libraries*, and *data visualization libraries*  students use most often on their journey to becoming super data scientist.
